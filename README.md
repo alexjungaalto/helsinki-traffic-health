@@ -1,5 +1,7 @@
 # Helsinki district morbidity vs. motorway proximity
 
+**Live: https://alexjungaalto.github.io/helsinki-traffic-health/**
+
 `helsinki_morbidity_highways.py` maps Helsinki's age-standardised **chronic-disease
 index** (*kansantauti-indeksi*) for all 33 published peruspiiri (districts) and tests
 it against road-traffic exposure built from **Fintraffic's automatic counters**.
@@ -122,3 +124,8 @@ constraint, and the credible route is register data with residential coordinates
   Statistics Finland), via Helsinki Region Infoshare — CC BY 4.0
 - Roads: OpenStreetMap contributors, via Overpass API — ODbL
 - Traffic: Fintraffic / Digitraffic TMS (LAM) counters — CC BY 4.0
+
+## Publishing
+
+`./deploy_github.sh` rebuilds `docs/` from `site/` plus the current figures and pushes
+to GitHub Pages. Run the script with `--html` first so all four outputs exist.
