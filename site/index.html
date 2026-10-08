@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Traffic and chronic disease in Helsinki's districts</title>
+<meta name="description" content="Helsinki's chronic-disease index by district against road traffic measured by Fintraffic counters — and why the asthma question cannot be answered with open data.">
+<style>
+:root{
+  color-scheme: light;
+  --surface:#fcfcfb; --plane:#f9f9f7; --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+  --rule:#e1e0d9; --accent:#2a78d6; --warn-bg:#fdf6ec; --warn-rule:#eda100;
+}
+@media (prefers-color-scheme: dark){
+  :root{ color-scheme: dark;
+    --surface:#1a1a19; --plane:#0d0d0d; --ink:#fff; --ink-2:#c3c2b7; --muted:#898781;
+    --rule:#2c2c2a; --accent:#3987e5; --warn-bg:#241f16; --warn-rule:#c98500; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--plane);color:var(--ink);
+  font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;}
+.wrap{max-width:860px;margin:0 auto;padding:48px 20px 80px}
+h1{font-size:clamp(1.7rem,4.5vw,2.5rem);line-height:1.15;margin:0 0 .4em;letter-spacing:-.02em}
+h2{font-size:1.25rem;margin:2.4em 0 .6em;letter-spacing:-.01em}
+h3{font-size:1rem;margin:1.6em 0 .4em}
+p,li{color:var(--ink-2)}
+.lede{font-size:1.12rem;color:var(--ink)}
+a{color:var(--accent)}
+figure{margin:1.6em 0;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:12px}
+figure img{display:block;width:100%;height:auto;border-radius:6px}
+figcaption{font-size:.84rem;color:var(--muted);margin-top:10px}
+.frame{width:100%;height:620px;border:1px solid var(--rule);border-radius:10px;background:var(--surface)}
+.note{background:var(--warn-bg);border-left:3px solid var(--warn-rule);
+  border-radius:0 8px 8px 0;padding:14px 18px;margin:1.6em 0}
+.note strong{color:var(--ink)}
+table{width:100%;border-collapse:collapse;font-size:.92rem;margin:1.2em 0}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule);color:var(--ink-2)}
+th{color:var(--ink);font-weight:600}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+code{background:var(--surface);border:1px solid var(--rule);border-radius:4px;padding:1px 5px;font-size:.88em}
+footer{margin-top:3em;padding-top:1.4em;border-top:1px solid var(--rule);font-size:.86rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Traffic and chronic disease in Helsinki's districts</h1>
+
+<p class="lede">I wanted to know whether people who live near motorways get more lung
+disease. In Helsinki you can get much closer to an answer than almost anywhere in Europe —
+and still not all the way. This is what the open data actually supports, and where it stops.</p>
+
+<div class="note">
+<strong>The finding that shaped everything else:</strong> Helsinki does not publish an
+asthma figure per district. The open file gives only a seven-disease composite, in which
+asthma is one unweighted seventh. So nothing on this page is a measure of asthma, and I
+have tried not to dress it up as one.
+</div>
+
+<h2>What is actually published</h2>
+
+<p>The City of Helsinki publishes an age-standardised <em>kansantauti-indeksi</em>
+(chronic-disease index) for each of its 33 reported districts (<em>peruspiiri</em>). It is
+built from Kela entitlements to special medicine reimbursement, and it is the unweighted
+mean of seven sub-indices: <strong>asthma, diabetes, rheumatoid arthritis, psychoses,
+coronary artery disease, heart failure and hypertension</strong>. Each is indexed against
+the city average (Helsinki = 100).</p>
+
+<p>The seven are averaged with equal weight, so asthma contributes about 14% of the number
+regardless of how common it is. An asthma-only series exists — the city commissioned these
+figures from Kela as a custom statistics order — but it is not open data.</p>
+
+<figure>
+  <img src="map.png" alt="Map of Helsinki's 33 districts coloured by chronic-disease index, with motorway and trunk roads drawn at a width proportional to measured daily traffic.">
+  <figcaption>Chronic-disease index by district, 2023 (Helsinki = 100; blue below, red above).
+  Road width is proportional to vehicles per day measured at Fintraffic counters. Hatched =
+  Östersundom, for which no index is published.</figcaption>
+</figure>
+
+<h2>Measuring the traffic, not just the geometry</h2>
+
+<p>The obvious exposure measure — the share of a district's land within 300 m of a motorway
+— turns out to be close to useless. It cannot tell a forest beside a motorway from a
+roadside neighbourhood, and it treats a slip road like a six-lane artery.</p>
+
+<p>So instead each road is weighted by what actually drives on it. Finland's road authority
+runs automatic counters (TMS/LAM) that are open through Digitraffic, including raw
+per-vehicle records. 72 of them sit in the Helsinki region; the busiest carries about
+118,000 vehicles a day. Exposure then becomes <strong>vehicle-kilometres per day per square
+kilometre</strong> of district.</p>
+
+<div class="scroll">
+<table>
+<thead><tr><th>Exposure measure</th><th class="num">Spearman ρ</th><th class="num">p</th><th class="num">n</th></tr></thead>
+<tbody>
+<tr><td>Traffic density (vehicle-km/day/km²)</td><td class="num"><strong>+0.34</strong></td><td class="num">0.054</td><td class="num">33</td></tr>
+<tr><td>Share of land within 300 m of a motorway</td><td class="num">+0.09</td><td class="num">0.62</td><td class="num">33</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>Weighting by measured traffic roughly quadruples the association. That is the
+methodological point of the exercise, and it is stable: averaging three weekdays of counts
+instead of one changes ρ from +0.338 to +0.339.</p>
+
+<figure>
+  <img src="scatter.png" alt="Scatter plot of road-traffic density against the chronic-disease index for 33 Helsinki districts, Spearman rho +0.34.">
+  <figcaption>Each dot is a district; marker area scales with population. Unadjusted for
+  income, age or smoking.</figcaption>
+</figure>
+
+<h2>Explore it</h2>
+<iframe class="frame" src="map.html" title="Interactive map of Helsinki districts and traffic volumes" loading="lazy"></iframe>
+<p style="font-size:.9rem"><a href="map.html">Open the interactive map full screen</a> ·
+<a href="districts.csv">Download the district table (CSV)</a></p>
+
+<h2>What this is not</h2>
+
+<ul>
+<li><strong>Not an asthma result.</strong> Six of the seven component diseases are not
+respiratory. Three of them — the cardiovascular ones — do have a real air-pollution
+pathway, which is part of why the correlation is not zero. It still cannot be read as a
+respiratory signal.</li>
+<li><strong>Not a causal estimate.</strong> 33 ecological units, unadjusted for income,
+education, smoking or housing age, all of which track both motorway proximity and
+morbidity.</li>
+<li><strong>Not population-weighted.</strong> Exposure is per unit of land, not per
+resident. The two highest-exposure districts, Länsi-Pakila and Itä-Pakila, are among the
+<em>healthiest</em> — they are quiet residential areas that happen to sit between two trunk
+roads. The correlation is carried by the inner and north-eastern districts.</li>
+<li><strong>Not a time series.</strong> The city states explicitly that its different
+vintages are not comparable.</li>
+<li>p = 0.054 is a weak signal, and I am reporting it as one.</li>
+</ul>
+
+<h2>If you wanted a real answer</h2>
+
+<p>The exposure side is the easy half here: the Finnish Meteorological Institute's ENFUSER
+model gives hourly NO₂ and PM2.5 at 10–15 m resolution across the Helsinki region, free.
+The binding constraint is the outcome side, and the credible route is register data with
+residential coordinates under a Findata permit — not district averages.</p>
+
+<p>For a causal question, the stronger design is a natural experiment: Stockholm's
+congestion charge, Germany's staggered low-emission zones, or London's ULEZ, where
+children's lung-function growth improved measurably while the earlier, weaker LEZ showed
+nothing.</p>
+
+<h2>Data sources</h2>
+<ul>
+<li><strong>Districts</strong> — City of Helsinki WFS, <code>avoindata:Maavesi_peruspiirit</code> (land only). CC BY 4.0</li>
+<li><strong>Chronic-disease index</strong> — "Helsingin sairastavuusindeksi", Kaupunkitieto / City of Helsinki, from Kela and Statistics Finland, via <a href="https://hri.fi/data/en/dataset/helsingin-seudun-sairastavuusindeksi">Helsinki Region Infoshare</a>. CC BY 4.0</li>
+<li><strong>Roads</strong> — OpenStreetMap contributors via Overpass API. ODbL</li>
+<li><strong>Traffic</strong> — <a href="https://www.digitraffic.fi/en/road-traffic/lam/">Fintraffic / Digitraffic TMS (LAM) counters</a>. CC BY 4.0</li>
+</ul>
+
+<footer>
+Code, method and the full list of data traps:
+<a href="https://github.com/alexjungaalto/helsinki-traffic-health">github.com/alexjungaalto/helsinki-traffic-health</a><br>
+Alexander Jung, Aalto University · built with Claude Code
+</footer>
+
+</div>
+</body>
+</html>
